@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Contact
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list >
+    <ion-list-header>List des contact</ion-list-header>
+    <ion-item *ngFor="let utilisateur of utilisateurs">
+      <ion-icon name="ionic" item-left></ion-icon>
+      {{utilisateur.nom}} {{utilisateur.prenomio}}
+    </ion-item>
+  </ion-list>
+</ion-content>
