@@ -16,6 +16,7 @@ export class UtilisateurService {
   constructor(public http: Http) {
     this._http=http;
       this.url='http://localhost:8080/todo/user/';
+    console.log('inject user service')
   }
 
   getAllUsers(): Observable<Array<Object>>{

@@ -14,4 +14,19 @@
       {{utilisateur.nom}} {{utilisateur.prenomio}}
     </ion-item>
   </ion-list>
+
+  </p>
+  <ion-list inset>
+    <form (ngSubmit)="logForm()">
+      <ion-item>
+        <ion-label>Utilisateur</ion-label>
+        <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-textarea [(ngModel)]="todo.description" name="description"></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" block>Ajouter utilisateur</button>
+    </form>
+  </ion-list>
 </ion-content>
