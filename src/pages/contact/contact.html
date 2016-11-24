@@ -8,25 +8,35 @@
 
 <ion-content>
   <ion-list >
-    <ion-list-header>List des contact</ion-list-header>
+    <ion-list-header>Liste des contacts</ion-list-header>
     <ion-item *ngFor="let utilisateur of utilisateurs">
       <ion-icon name="ionic" item-left></ion-icon>
-      {{utilisateur.nom}} {{utilisateur.prenomio}}
+      {{utilisateur.nom}} {{utilisateur.prenom}}
     </ion-item>
   </ion-list>
 
-  </p>
-  <ion-list inset>
-    <form (ngSubmit)="logForm()">
-      <ion-item>
-        <ion-label>Utilisateur</ion-label>
-        <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Description</ion-label>
-        <ion-textarea [(ngModel)]="todo.description" name="description"></ion-textarea>
-      </ion-item>
-      <button ion-button type="submit" block>Ajouter utilisateur</button>
-    </form>
-  </ion-list>
+  <br/>
+  <ion-content>
+    <!--<form (ngSubmit)="logForm()" #formData='ngForm'>-->
+  <form (ngSubmit)="submit()" [formGroup]="userForm">
+    <ion-item>
+      <ion-label floating>Code</ion-label>
+      <ion-input formControlName="code" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nom</ion-label>
+      <ion-input formControlName="nom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Prénom</ion-label>
+      <ion-input  formControlName="prenom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Login</ion-label>
+      <ion-input  formControlName="login"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Ajouter Utilisateur</button>
+  </form>
+  </ion-content>
+
 </ion-content>

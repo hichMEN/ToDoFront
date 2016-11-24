@@ -25,12 +25,32 @@ export class UtilisateurService {
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  addUser(user:Object): Observable<Response> {
+   addUser(user:Object): Observable<Object> {
     let bodyString = JSON.stringify(user);
-    let headers      = new Headers({ 'Content-Type': 'application/json' });
-    let options       = new RequestOptions({ headers: headers })
+    console.log('call service '+bodyString)
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers })
 
-    return this._http.post(this.url+'add',bodyString,options)
-      .map((res:Response) => res.json()).catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+     return this._http.post(this.url+'add',bodyString,options)
+       .map((res:Response) => res.json()).catch(this.handleError);
+      // .share().catch(err =>  {
+        // alert('error'+err);
+        // return Observable.throw(err); // observable needs to be returned or exception raised
+       //});
+      // .map((res:Response) => res.json()).subscribe();
+      // .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  private handleError (error: Response | any) {
+    // In a real world app, we might use a remote logging infrastructure
+    let errMsg: string;
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
 }
