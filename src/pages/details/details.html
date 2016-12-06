@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Details de {{selectedUser.prenom}} {{selectedUser.nom}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!--<form (ngSubmit)="logForm()" #formData='ngForm'>-->
+  <form (ngSubmit)="update()" [formGroup]="userUpdateForm">
+    <br/>
+    <ion-item>
+      <ion-label floating>Code</ion-label>
+      <ion-input formControlName="code" disabled="true"  ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nom</ion-label>
+      <ion-input formControlName="nom" [(ngModel)]="selectedUser.nom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Prénom</ion-label>
+      <ion-input  formControlName="prenom" [(ngModel)]="selectedUser.prenom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Login</ion-label>
+      <ion-input  formControlName="login" [(ngModel)]="selectedUser.login"></ion-input>
+    </ion-item>
+    <button ion-button type="submit"  block>Enregistrer</button> <!--(click)="update()"  -->
+  </form>
+</ion-content>

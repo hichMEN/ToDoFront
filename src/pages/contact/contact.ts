@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import {NavController, PopoverController} from 'ionic-angular';
 import {UtilisateurService} from "../../providers/utilisateur-service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DateFormatter} from "@angular/common/src/facade/intl";
+import {DetailsPage} from "../details/details";
+import {HomePage} from "../home/home";
+import {AboutPage} from "../about/about";
 
 
 @Component({
@@ -16,7 +19,7 @@ export class ContactPage {
 
   public userForm:FormGroup;
   utilisateurs: Array<Object>;
-  constructor(public navCtrl: NavController, private _utilisateurService:UtilisateurService, private _fb: FormBuilder) {
+  constructor(public navCtrl: NavController, private _utilisateurService:UtilisateurService, private _fb: FormBuilder,private popoverCtrl: PopoverController) {
   }
 
 
@@ -26,11 +29,12 @@ export class ContactPage {
     let dateF = DateFormatter.format(date,'pt','dd/MM/yyyy');
 
     this.userForm  = this._fb.group({
+      id:[''],
       code: [''],
       nom: [''],
       prenom: [''],
-      login: [''],
-      dateCreation: [dateF.toString()]
+      login: ['']
+      // , dateCreation: [dateF.toString()]
     })
 
   }
@@ -44,18 +48,20 @@ export class ContactPage {
 
   submit(){
     console.log(this.userForm.value)
-    this._utilisateurService.addUser(this.userForm.value).map(res => JSON.stringify(res)).catch(err => console.error(err))
+    this._utilisateurService.addUser(this.userForm.value).subscribe(user => {
+      this.utilisateurs.push(user)});
   }
 
-  private extractData(res: Object) {
-    let body = res.json();
-    return body.data || { };
-  }
+details(user:Object) {
+  let popover = this.popoverCtrl.create(DetailsPage, user);
+  popover.present();
+}
 
-
-
-
-  // addUser(utilisateur:Object){
-  //   this.utilisateurs.push(utilisateur);
-  // }
+delate(id:number){
+  alert(id);
+  this._utilisateurService.deleteUser(id).subscribe(data =>{
+    this.utilisateurs,
+      error =>console.log(error)
+  })
+}
 }
