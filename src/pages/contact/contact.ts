@@ -50,18 +50,27 @@ export class ContactPage {
     console.log(this.userForm.value)
     this._utilisateurService.addUser(this.userForm.value).subscribe(user => {
       this.utilisateurs.push(user)});
+    this.userForm.reset();
   }
 
 details(user:Object) {
-  let popover = this.popoverCtrl.create(DetailsPage, user);
-  popover.present();
+  // let popover = this.popoverCtrl.create(DetailsPage, user);
+  // popover.present();
+  this.navCtrl.push(DetailsPage, user);
 }
 
-delate(id:number){
-  alert(id);
-  this._utilisateurService.deleteUser(id).subscribe(data =>{
-    this.utilisateurs,
-      error =>console.log(error)
-  })
+delete(id:number, user:Object){
+
+  var index= this.utilisateurs.indexOf(user);
+  console.log('index: '+index)
+  this._utilisateurService.deleteUser(id).subscribe(
+    success=>
+    {
+     if (index > -1)
+      {
+        this.utilisateurs.splice(index, 1);
+      }
+    }
+  )
 }
 }

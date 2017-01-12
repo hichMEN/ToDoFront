@@ -20,7 +20,11 @@ export class UtilisateurService {
   constructor(public http: Http) {
     this._http=http;
       this.url='http://localhost:8080/todo/user/';
-      this.headers = new Headers({ 'Content-Type': 'application/json' });
+      this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Access-Control-Allow-Origin', '*');
+    this.headers.append('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT');
+    this.headers.append('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, X-Auth-Token, content-type');
     this.options = new RequestOptions({ headers: this.headers })
   }
 
@@ -31,25 +35,22 @@ export class UtilisateurService {
   }
 
    addUser(user:Object): Observable<Response> {
-    let data = JSON.stringify(user, null, 2)
-     console.log('adduser '+data)
-    //return this._http.post(this.url+'add', data,options).share().subscribe(null,err => alert(err))
-     return this._http.post(this.url+'add', data,this.options).map(res =>  <Object> res.json())
-       .do(data => console.log(data))
+    let data = JSON.stringify(user, null, 2);
+    return this._http.post(this.url+'add', data,this.options).map(res =>  <Object> res.json())
        .catch(this.handleError)
    }
 
    updateUser(user:Object): Observable<Response>{
      let data = JSON.stringify(user, null, 2)
      console.log('updateUser '+data)
-     return this._http.put(this.url+'update', data,this.options).map((res: Response) => res.json());
-       // .map(res =>  <Object> res.json())
-       // .do(data => console.log(data))
-       // .catch(this.handleError)
+     return this._http.put(this.url+'update', data,this.options).map(res =>  <Object> res.json())
+       .catch(this.handleError);
    }
 
    deleteUser(id:number):Observable<Response>{
-      return this._http.delete(this.url+"delete/" +id, this.options).map((res: Response) => res.json()).catch(this.handleError);
+      return this._http.delete(this.url+"delete/" +id, this.options)
+        // .map(res =>  <Object> res.json())
+        .catch(this.handleError);
    }
 
   private handleError (error: Response) {

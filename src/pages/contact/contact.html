@@ -7,27 +7,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-list >
-    <ion-list-header>Liste des contacts</ion-list-header>
-    <ion-item *ngFor="let utilisateur of utilisateurs">
-      <ion-icon name="ionic" item-left></ion-icon>
-      {{utilisateur.nom}} {{utilisateur.prenom}} <button ion-button  (click)="details(utilisateur)">
-      Détails
-    </button><button danger (click)="delate(utilisateur.id)">
-      <ion-icon name="trash"></ion-icon>
-      Supprimer
-    </button>
-    </ion-item>
 
-  </ion-list>
 
-  <br/>
+
+  <br/><br/><br/>
+
+
+
+      <ion-list >
+        <ion-list-header>Liste des contacts</ion-list-header>
+        <ion-item *ngFor="let utilisateur of utilisateurs">
+          <ion-icon name="ionic" item-left></ion-icon>
+          {{utilisateur.nom}} {{utilisateur.prenom}} <button ion-button  (click)="details(utilisateur)">
+          Détails
+        </button><button danger (click)="delete(utilisateur.id,utilisateur)">
+          <ion-icon name="trash"></ion-icon>
+          Supprimer
+        </button>
+        </ion-item>
+
+      </ion-list>
+
+
+
   <ion-content>
     <!--<form (ngSubmit)="logForm()" #formData='ngForm'>-->
   <form (ngSubmit)="submit()" [formGroup]="userForm">
     <ion-item>
       <ion-label floating>Code</ion-label>
-      <ion-input formControlName="code" ></ion-input>
+      <ion-input formControlName="code" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Nom</ion-label>
