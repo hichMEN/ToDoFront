@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core'
+import { Resources } from '../../config/resources';
+import { Http } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
+
+@Injectable()
+export class LoginService {
+    private urlLogin: string;
+
+    constructor(private http: Http) {
+        this.urlLogin = Resources.getUrlBackend() + "oauth/token";
+    }
+
+    public login(usuario) {
+
+        let headers = new Headers({
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+            "Authorization": "Basic " + btoa("clientapp" + ':' + "springSecurity")
+        });
+
+        let options = new RequestOptions({ headers: headers });
+
+        let client = "username=" + usuario.email + "&password=" + encodeURIComponent(usuario.senha) + "&grant_type=password&" +
+            "client_secret=springSecurity&client_id=clientapp";
+
+        return this.http.post(this.urlLogin, client, options)
+            .map(res => res.json());
+    }
+
+} 
